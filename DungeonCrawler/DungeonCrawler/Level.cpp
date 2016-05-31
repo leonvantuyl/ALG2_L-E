@@ -179,10 +179,21 @@ void Level::printLevel(){
 
 			if (!temp->getVisited())
 			{
-				if (x != levelWidth -1)
-					std::cout << "---";
+				Room *tempEast = temp->getRoom(RoomDirection::EAST);
+				if (x != levelWidth -1) 
+					if (!tempEast->getVisited())
+						std::cout << "???";
+					else
+						std::cout << "---";
+				
+				Room *tempSouth = temp->getRoom(RoomDirection::SOUTH);
+
 				if (y != levelHeight -1)
-					bottomConnection += "?   ";
+					if (!tempSouth->getVisited())
+						bottomConnection += "?   ";
+					else
+						bottomConnection += "|   ";
+					
 			}
 			else
 			{

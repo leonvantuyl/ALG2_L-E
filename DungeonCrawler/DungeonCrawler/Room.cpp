@@ -112,6 +112,11 @@ Room * Room::moveTo(RoomDirection dir)
 
 }
 
+Room* Room::getRoom(RoomDirection direction)
+{
+	return connected.at(direction);
+}
+
 string Room::getDescription(){
 	string returnVal = "";
 	if (exit)

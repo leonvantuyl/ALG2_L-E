@@ -63,7 +63,7 @@ public:
 	int getScore();
 	int getTrapDamage();
 	std::vector<EnemyBase*> getEnemysAlive();
-	Room * moveTo(RoomDirection);
+	Room* moveTo(RoomDirection);
 	Room* getRoom(RoomDirection);
 	string getDescription();
 	string getSymbol();
