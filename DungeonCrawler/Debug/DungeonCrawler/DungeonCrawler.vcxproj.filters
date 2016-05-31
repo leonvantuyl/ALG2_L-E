@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Equipment">
+      <UniqueIdentifier>{824241d8-90bd-47f1-aa3b-74d932aa2025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{8ea69742-e154-4a89-b461-7b75d59e0468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Default">
+      <UniqueIdentifier>{34ec1ccd-68e0-49b7-9428-e9f2b5794066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Default">
+      <UniqueIdentifier>{b3646b16-664c-4d2c-8032-b38f9ef90847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Equipment">
+      <UniqueIdentifier>{2e60040e-e5ec-4973-85f7-96049a485b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{a2599a70-46b6-47d8-91a7-769fd15020a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enemy">
+      <UniqueIdentifier>{a5d18702-fa53-43d9-95d3-a4b74c9641f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{97b4935d-d4ae-4330-97df-52bd1b27d717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Random">
+      <UniqueIdentifier>{5b5c8ba9-3707-430c-808b-ed1e704437cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Random">
+      <UniqueIdentifier>{5d695a0e-69c4-4034-a8c3-0d122550396b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Equipment.h">
+      <Filter>Header Files\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Edge.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBase.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DungeonCrawler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Source Files\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Edge.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBase.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DungeonCrawler.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
