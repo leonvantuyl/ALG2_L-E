@@ -60,12 +60,12 @@ Level::Level(int id, Player * pl)
 
 	setInitialPosition();
 
-	Room *temp = &rooms[0][0];
+	/*Room *temp = &rooms[0][0];
 	temp->removeConnection(RoomDirection::NORTH);
 	temp = &rooms[3][3];
 	temp->removeConnection(RoomDirection::EAST);
 	temp = &rooms[1][1];
-	temp->removeConnection(RoomDirection::WEST);
+	temp->removeConnection(RoomDirection::WEST);*/
 }
 
 
@@ -128,6 +128,30 @@ int Level::getTrapDamage()
 	return currentPosition->getTrapDamage();
 }
 
+void Level::grenade()
+{
+	//TODO Blaast 10-15 corridors op. 
+	//visited corridors worden ook als gesloopt getoond.
+	//Gebruikt de minimum spanning tree
+}
+
+void Level::magicTalisman()
+{
+	//TODO toont hoeveel stappen nodig zijn om naar de uitgang te lopen.
+	//Gebruikt breadth first search
+	//Houd rekening met collapse corridors
+}
+
+void Level::compass()
+{
+	//TODO Vind de veiligste weg naar de exit print de route uit (noord noord oost west bijv.)
+	/*veiligheid is gebaseerd op total enemy HP en traps hoe hoger des te gevaarlijker. Gebruik dijkstras algorithme*/
+
+	//TODO cheat code toevoegen om de hele map te zien met -HP waardes per kamer.
+
+	//dijkstrasAlgorithm();
+}
+
 void Level::pickItems()
 {
 	vector<Equipment> temp = currentPosition->pickItems(p1->getAwarenes());
@@ -156,7 +180,7 @@ void Level::printLevel(){
 			if (!temp->getVisited())
 			{
 				if (x != levelWidth -1)
-					std::cout << "???";
+					std::cout << "---";
 				if (y != levelHeight -1)
 					bottomConnection += "?   ";
 			}

@@ -14,6 +14,10 @@
 		bool finished;
 		std::vector < std::vector<Room> >  rooms;
 		std::vector < Edge >  edges;
+
+		void minimumSpanningTree();
+		void breadthFirstSearch();
+		void dijkstrasAlgorithm();
 	public:
 		Level(int id, Player * pl);
 		~Level();
@@ -31,5 +35,9 @@
 		void setInitialPosition();
 		void findEquipment(int);
 		int getTrapDamage();
+
+		void grenade();
+		void magicTalisman();
+		void compass();
 	};
 
