@@ -43,8 +43,10 @@ string Room::getSymbolCheat(){
 string Room::getSymbol(){
 	if (visiting)
 		return "P";
-	else if (visited)
+	else if (visited & !exit)
 		return "X";
+	else if (visited & exit)
+		return "S";
 	else 
 		return ".";
 	

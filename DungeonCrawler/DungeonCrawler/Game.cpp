@@ -49,20 +49,25 @@ void Game::start(){
 		switch (input[0]){
 		case 'w':
 			currentLevel->move(RoomDirection::NORTH);
+			currentLevel->showDescription();
 			break;
 		case 'a':
 			currentLevel->move(RoomDirection::WEST);
+			currentLevel->showDescription();
 			break;
 		case 'd':
 			currentLevel->move(RoomDirection::EAST);
+			currentLevel->showDescription();
 			break;
 		case 's':
 			currentLevel->move(RoomDirection::SOUTH);
+			currentLevel->showDescription();
 			break;
 		case 'u':
 			currentLevel->moveUp();
 			break;
 		case 'p':
+			//TODO klopt niet met beschrijving en wat doet deze methode. 
 			currentLevel->pickItems();
 			break;
 		case 'z':
@@ -75,6 +80,7 @@ void Game::start(){
 			currentLevel->fight();
 			break;
 		case 'b':
+			//TODO dit is een cheatcode
 			currentLevel->setFinished();
 			break;
 		case 'e':

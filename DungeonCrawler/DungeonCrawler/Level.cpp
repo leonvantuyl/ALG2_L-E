@@ -104,6 +104,7 @@ void Level::showDescription()
 	printLevel();
 	findBombs();
 	std::cout << currentPosition->getDescription() << std::endl;
+	//TODO enemy hoor je gelijk tegen te komen als je een kamer binnen komt.
 	currentPosition->showEnemys();
 	currentPosition->findEquipment( p1->getAwarenes() );
 	currentPosition->showEquipment();
