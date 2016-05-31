@@ -22,7 +22,7 @@ const string  RoomColor[]
 class Room
 {
 private:
-	map<RoomDirection, Room*> connected;
+	map<RoomDirection, Room*> connected; //Map containing all possible corridors
 	string size;
 	string content;
 	string description;
@@ -70,6 +70,11 @@ public:
 	string getSymbolCheat();
 	bool getVisited();
 	RoomDirection getOpposite(RoomDirection);
+
+	//TODO invullen
+	void collapseDirection(RoomDirection);
+	void findCollapseRoomDirection(Room*);
+
 };
 
 

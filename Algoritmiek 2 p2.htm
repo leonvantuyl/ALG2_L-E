@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="ng-scope" ng-app="alg2" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <meta charset="utf-8">
+    <title>Algoritmiek 2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link href="Algoritmiek%202%20p2_bestanden/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://www.avans.nl/favicon.64.png">
+
+    <script src="Algoritmiek%202%20p2_bestanden/jquery-1.js"></script>
+    <script src="Algoritmiek%202%20p2_bestanden/pointypony.js"></script>
+    <script src="Algoritmiek%202%20p2_bestanden/app.js"></script>
+    <script src="Algoritmiek%202%20p2_bestanden/jquery-ui.js"></script>
+    <style>
+    .assignment img.right {
+      float: right;
+      margin: 10px;
+      max-width: 30%;
+    }
+
+    .assignment ol {
+      margin-top: 10px;
+      line-height: 1.8em;
+    }
+
+    .assignment {
+      margin-bottom: 25px;
+      margin-top: 25px;
+    }
+    .term {
+      background-color: black;
+      color: white;
+      white-space: pre-wrap;
+      font-family: "Courier New";
+
+    }
+    .terminal {
+      background-color: black;
+      color: white;
+      white-space: pre-wrap;
+      font-family: "Courier New";
+      display: block;
+      width: 50%;
+      padding: 10px;
+    }
+    </style>
+  </head>
+
+  <body updatelinks="">
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">Algoritmiek 2</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a href="#recursie.html">Week 1. Recursie</a></li>
+              <li><a href="#sorting.html">Week 2. Quicksort &amp; Mergesort</a></li>
+              <li><a href="#binarytrees.html">Week 3. Binary Trees</a></li>
+              <li><a href="#balancedtrees.html">Week 4. Self-balancing binary search tree</a></li>
+              <li><a href="#graphs.html">Week 5. Graphs</a></li>
+              <li><a href="#dijkstra.html">Week 6. Dijkstra's Algorithm</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- uiView:  --><article class="col-md-9 ng-scope" id="content" ui-view=""><!-- ngInclude: url --><div class="ng-scope" ng-include="url">
+
+
+  <title class="ng-scope">Dijkstra's Algorithm</title>
+
+
+
+  <h1 class="ng-scope">Dijkstra's Algorithm</h1>
+
+  <figure class="ng-scope" style="float: right; width: 35%; border: 1px solid #bbb">
+    <img src="Algoritmiek%202%20p2_bestanden/shortestpath.jpg" style="width: 100%;">
+
+  </figure>
+
+  <p class="ng-scope">Deze week gaan we kijken naar het laatste 
+onderwerp van dit vak: het kortste pad berekenen met behulp van 
+Dijkstra's algoritme. Dit is niet het enige algoritme om het kortste pad
+ mee te berekenen. Maar wel één van de meest bekende en meest gebruikte.</p>
+
+  <p class="ng-scope">We gaan het spel waar je vorige week mee begonnen 
+bent verder uitbreiden met tegenstanders die een bepaald level zijn. 
+Deze bevinden zich in de kamertjes en de held moet er tegen vechten als 
+deze in een kamertje komt waar een tegenstander zich bevindt.</p>
+
+  <p class="ng-scope">Onze held wil graag zo snel mogelijk naar de 
+uitgang komen. Daarbij wil hij zo min mogelijk kamertjes langs. Maar nog
+ liever wil hij zo min mogelijk lastige tegenstanders bevechten. Als 
+onze held de keuze heeft uit twee tegenstanders met allebei 10 hp of één
+ tegenstander met 30 hp, dan zal hij liever voor het eerste kiezen. En 
+als er een route is zonder tegenstanders kiest hij natuurlijk daar voor.</p>
+
+  <p class="ng-scope">Naast tegenstanders zijn er ook vallen die onze 
+held wil vermijden. Je mag zelf kiezen hoe zwaar dit meeweegt ten 
+opzichte van het vijandjes vermijden.</p>
+
+  <hr class="ng-scope" style="clear: both">
+  <div class="assignment ng-scope">
+    <h2>Shortest path algorithm</h2>
+    <img src="Algoritmiek%202%20p2_bestanden/compass.jpg" class="right">
+
+    <p>Voeg het item '<i>zilveren kompas</i>' toe aan het spel die de 
+held van het spel altijd bij zich heeft. Als de held dit kompas gebruikt
+ vertelt het de route die hij moet volgen om zo veilig mogelijk naar de 
+uitgang te komen. Daarbij worden vijandjes en vallen vermeden zoals 
+hierboven beschreven.</p>
+
+    <code class="terminal">-&gt; kompas
+
+Je haalt het kompas uit je zak. Het trilt in je hand en projecteert in grote lichtgevende letters in de lucht:
+
+Noord - Noord - Oost - Oost - Noord - West
+2 tegenstanders (10 hp, 5 hp)
+1 val
+</code>
+
+    <p>Gebruik het kortste pad algoritme van Dijkstra om de route te 
+berekenen. Bedenk van tevoren goed hoe je de edge-weights gaat berekenen
+ en op welke edges ze van toepassing zijn.</p>
+
+    <p>Implementeer ook een cheat-commando om de hele kaart met alle 
+tegenstanders en hun hp scores te kunnen laten zien. En een commando die
+ op het kortste pad extra moeilijke tegenstander(s) plaatst. Zodat je 
+tijdens het assessment kan demonstreren dat het algoritme werkt en er 
+een route omheen wordt gekozen.</p>
+  </div>
+
+  <h3 class="ng-scope">Beoordeling assessment</h3>
+
+  <p class="ng-scope">Bij het assessment gaan we het spel spelen en je 
+vragen stellen over de werking van de algoritmes aan de hand van de 
+code. Als we er fouten in vinden of jullie kunnen de code niet uitleggen
+ dan krijg je daar op dat onderdeel punten aftrek voor.</p>
+
+  <p class="ng-scope">We hanteren de volgende normering:</p>
+
+  <table class="table table-bordered ng-scope">
+    <tbody><tr>
+      <th>Max Punten</th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td>Implementatie Breadth First Search</td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>Implementatie Minimum Spanning Tree</td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>Implementatie Dijkstra's Algorithm</td>
+    </tr>
+
+    <tr>
+      <td>1</td>
+      <td>Bonus: Minimum Spanning Tree</td>
+    </tr>
+
+    <tr>
+      <td>1</td>
+      <td>Bonus: <i>Iets extra's</i></td>
+    </tr>
+  </tbody></table>
+
+  <p class="ng-scope">Voor het laatste 'iets extras' punt voor de 
+absolute 10 moet je zelf nog iets bedenken dat te maken heeft met graph 
+algorithms. Bijvoorbeeld om je kerker zo op te bouwen dat je nooit twee 
+vallen of twee tegenstanders in aangrenzende kamers hebt (graph 
+coloring). Of je kerker met behulp van een maze-generation algoritme op 
+te bouwen (zorg er dan wel voor dat je gegenereerde maze niet al een 
+spanning tree is, anders kan je de handgranaat nooit gebruiken :( ).</p>
+
+  <p class="ng-scope">Let op dat je dit laatste bonus punt alleen 
+verdiend als je zowel de Breadth First Search, Minimum Spanning Tree en 
+Dijkstra's Algorithm opdrachten hebt gemaakt.</p>
+
+
+
+</div></article>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>2015 Avans</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+  
+
+</body></html>

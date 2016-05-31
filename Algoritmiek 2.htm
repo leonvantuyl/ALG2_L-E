@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="ng-scope" ng-app="alg2" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <meta charset="utf-8">
+    <title>Algoritmiek 2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link href="Algoritmiek%202_bestanden/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://www.avans.nl/favicon.64.png">
+
+    <script src="Algoritmiek%202_bestanden/jquery-1.js"></script>
+    <script src="Algoritmiek%202_bestanden/pointypony.js"></script>
+    <script src="Algoritmiek%202_bestanden/app.js"></script>
+    <script src="Algoritmiek%202_bestanden/jquery-ui.js"></script>
+    <style>
+    .assignment img.right {
+      float: right;
+      margin: 10px;
+      max-width: 30%;
+    }
+
+    .assignment ol {
+      margin-top: 10px;
+      line-height: 1.8em;
+    }
+
+    .assignment {
+      margin-bottom: 25px;
+      margin-top: 25px;
+    }
+    .term {
+      background-color: black;
+      color: white;
+      white-space: pre-wrap;
+      font-family: "Courier New";
+
+    }
+    .terminal {
+      background-color: black;
+      color: white;
+      white-space: pre-wrap;
+      font-family: "Courier New";
+      display: block;
+      width: 50%;
+      padding: 10px;
+    }
+    </style>
+  </head>
+
+  <body updatelinks="">
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">Algoritmiek 2</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a href="#recursie.html">Week 1. Recursie</a></li>
+              <li><a href="#sorting.html">Week 2. Quicksort &amp; Mergesort</a></li>
+              <li><a href="#binarytrees.html">Week 3. Binary Trees</a></li>
+              <li><a href="#balancedtrees.html">Week 4. Self-balancing binary search tree</a></li>
+              <li><a href="#graphs.html">Week 5. Graphs</a></li>
+              <li><a href="#dijkstra.html">Week 6. Dijkstra's Algorithm</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- uiView:  --><article class="col-md-9 ng-scope" id="content" ui-view=""><!-- ngInclude: url --><div class="ng-scope" ng-include="url">
+
+
+  <title class="ng-scope">Graphs</title>
+
+
+
+  <h1 class="ng-scope">Graphs</h1>
+
+  <figure class="ng-scope" style="float: right; width: 35%; border: 1px solid #bbb">
+    <img src="Algoritmiek%202_bestanden/adventure_map.png" style="width: 100%;">
+
+  </figure>
+
+  <p class="ng-scope">Deze week gaan we beginnen met het <b>assessment</b>, de opgaven zullen dus niet in de les afgetekend worden maar laat je in de tentamenweek tijdens het assessment nakijken.</p>
+
+  <p class="ng-scope">De opdracht is om een rogue-like text-adventure te
+ maken. In dit spel ben je een held die door een kerker loopt met 
+allemaal kamertjes die via de richtingen noord, zuid, oost en west met 
+elkaar verbonden zijn.
+
+  <code class="terminal">N = Normaal
+H = Trap omhoog
+. = Niet bezocht
+~ = Ingestort
+
+. . . . .
+
+. H . . .
+  | ~
+. N-N-N .
+  |   |
+. . . . .
+
+Je bent in een kamer zonder tegenstanders, er is een doorgang in het noorden, oosten en westen. Wat doe je?
+
+Acties: noord, oost, west, talisman, handgranaat
+
+-&gt; noord</code>
+
+
+  </p><p class="ng-scope">In de rogue-like moeten jullie kamertjes maken
+ die met doorgangen met elkaar verbonden zijn. Als je de kamers 
+beschouwt als vertices en de doorgangen als edges kun je de kaart van 
+het spel als een undirected unweighted graph beschouwen. <b>Je mag de opdracht combineren met de eindopdracht die je voor C++ moet maken.</b>. Er zal echter een apart assessment worden ingepland voor ALG2.</p>
+
+  <hr class="ng-scope" style="clear: both">
+  <div class="assignment ng-scope">
+    <h2>Breadth-first search</h2>
+    <img src="Algoritmiek%202_bestanden/talisman.jpg" class="right">
+
+    <p>Voeg het item '<i>magische talisman</i>' toe aan het spel die de 
+held van het spel altijd bij zich heeft. Als de held de talisman 
+raadpleegt vertelt deze hoeveel stappen ver weg de trap omhoog is. Als 
+de held in de kamer met de trap omhoog is is dat 0 stappen, de kamer 
+ernaast 1 stap enzovoorts.</p>
+
+    <p>Bereken het aantal stappen efficient met behulp van het 
+breadth-first search algoritme. Laat het algoritme dus niet meer kamers 
+langslopen dan nodig is!</p>
+
+    <code class="terminal">-&gt; talisman
+
+De talisman licht op en fluistert dat de trap omhoog 5 kamers ver weg is</code>
+
+  </div>
+
+  <div class="assignment ng-scope">
+    <h2>Minimum spanning tree</h2>
+    <img src="Algoritmiek%202_bestanden/grenade.jpg" class="right">
+
+    <p>Voeg een item '<i>handgraat</i>' toe die de held kan gebruiken om
+ de tegenstander in een kamer in 1 klap te doden. Echter, als hij deze 
+gebruikt heeft dat desastreuze gevolgen voor de kerker. Zorg ervoor dat 
+als de held een handgranaat gebruikt tussen de 10-15 doorgangen op het 
+huidige niveau in de kerker <b>geblokkeerd</b> worden. Deze ingestorte doorgangen geef je op de kaart aan met een <code class="term">~</code> tekentje. De speler kan ingestorte doorgangen niet meer passeren.</p>
+
+    <p>Echter, de kerker is magisch en zal altijd <i>net</i> genoeg 
+structurele integriteit behouden om alle kamers vanuit alle kamers 
+bereikbaar te houden. Maar mogelijk wel met een omweg dus.</p>
+
+    <code class="terminal">-&gt; handgranaat
+
+De kerker schudt op zijn grondvesten, alle tegenstanders in de kamer zijn verslagen! Een donderend geluid maakt duidelijk dat gedeeltes van de kerker zijn ingestort...</code>
+
+    <p>Als de kerker zover is verwoest dat elke extra ingestorte 
+doorgang ervoor zou zorgen dat gedeeltes onbereikbaar worden kan de held
+ de handgranaat niet meer gebruiken:</p>
+
+    <code class="terminal">-&gt; handgranaat
+
+Je vreest dat een extra handgranaat een cruciale passage zal blokkeren. Het is beter om deze niet meer te gebruiken op deze verdieping.</code>
+
+    <p>Bepaal welke doorgangen je nog kan opblazen door eerst de <b>minimum spanning tree</b> van de huidige verdieping van de kerker te bepalen. Doe dit door middel van het algoritme van <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim</a> of <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal</a>.
+ Je mag zelf kiezen welke van de twee je implementeert in jouw spel. 
+Alle doorgangen die niet in een minimum spanning tree voorkomen zijn 
+veilig om te laten instorten.</p>
+
+    <p>Bouw ook een cheatmode in om de hele kaart in één keer te tonen 
+zodat we tijdens het assessment kunnen controleren of je de juiste 
+doorgangen laat instorten</p>
+
+    <p><b>Bonus:</b> Maak het de speler extra moeilijk door de 
+ingestorte doorgangen zo dicht mogelijk in de buurt van de held te laten
+ voorkomen. Kies de niet-cruciale doorgangen die het dichtst bij de held
+ liggen om te laten instorten.</p>
+  </div>
+
+
+
+</div></article>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>2015 Avans</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+  
+
+</body></html>

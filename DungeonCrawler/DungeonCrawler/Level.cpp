@@ -81,7 +81,7 @@ void Level::move(RoomDirection dir)
 	int damage = currentPosition->getTrapDamage();
 	currentPosition = currentPosition->moveTo(dir);	
 	
-	
+	//TODO uitbreiden voor ingestorten edges
 	printLevel();
 	if (temp == currentPosition)
 	{
@@ -137,7 +137,7 @@ void Level::pickItems()
 }
 
 void Level::printLevel(){
-
+	//TODO toon ook kapotte doorgangen
 	std::system("cls");
 	vector< vector<int> >::iterator row;
 	vector<int>::iterator col;

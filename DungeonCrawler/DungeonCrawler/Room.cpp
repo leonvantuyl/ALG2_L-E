@@ -95,6 +95,7 @@ int Room::getTrapDamage()
 }
 Room * Room::moveTo(RoomDirection dir)
 {
+	//TODO ingestorte edge controlen
 	if (hasConnection(dir))
 	{
 		connected[dir]->setVisiting(true);
@@ -157,6 +158,16 @@ RoomDirection Room::getOpposite(RoomDirection r){
 	default:
 		return RoomDirection::EAST;
 	}
+}
+
+void Room::collapseDirection(RoomDirection)
+{
+	//TODO set room in given roomdirection to null
+}
+
+void Room::findCollapseRoomDirection(Room *)
+{
+	//TODO find roomdirection with given room and set it's room to null with collapseDirection(roomdir)
 }
 
 bool Room::hasConnection(RoomDirection direction){
