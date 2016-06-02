@@ -75,7 +75,7 @@ public:
 
 	//TODO invullen
 	void collapseDirection(RoomDirection);
-	void findCollapseRoomDirection(Room*);
+	RoomDirection findCollapseRoomDirection(Room*);
 
 };
 

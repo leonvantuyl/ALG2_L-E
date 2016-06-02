@@ -178,14 +178,25 @@ RoomDirection Room::getOpposite(RoomDirection r){
 	}
 }
 
-void Room::collapseDirection(RoomDirection)
+void Room::collapseDirection(RoomDirection roomDirection)
 {
 	//TODO set room in given roomdirection to null
 }
 
-void Room::findCollapseRoomDirection(Room *)
+RoomDirection Room::findCollapseRoomDirection(Room* room)
 {
 	//TODO find roomdirection with given room and set it's room to null with collapseDirection(roomdir)
+	typedef std::map<RoomDirection, Room*>::iterator it_type;
+	for (it_type iterator = connected.begin(); iterator != connected.end(); iterator++) {
+		// iterator->first = key
+		// iterator->second = value
+		
+		if (iterator->second == room)
+		{
+			//brokenConnections.at(iterator->first) = true;
+			return iterator->first;
+		}
+	}
 }
 
 bool Room::hasConnection(RoomDirection direction){

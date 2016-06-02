@@ -94,17 +94,23 @@ void Game::start(){
 			break;
 		case 'q':
 			running = false;
+		case 't':
+			std::cout << "You look into your magic talisman" << std::endl << "The magic talisman reveals a number through it's crystal. " << std::endl;
+			std::cout << currentLevel->magicTalisman() << " rooms remaining to the stairs" << std::endl;
+			break;
+		case 'g':
+			currentLevel->grenade();
 		default:
 			std::system("cls");
 			std::cout << "unknown key" << std::endl;
 			printHelp();
 			break;
 		}
-		if (!p1.isAlive())
+		/*if (!p1.isAlive())
 		{
 			system( "cls" );
 			cout << "You are dead sucker" << endl;
-		}
+		}*/
 	}
 }
 
@@ -121,9 +127,8 @@ void Game::printHelp(){
 	std::cout << " A : move west." << std::endl;
 	std::cout << " P : pick up item" << std::endl;
 	std::cout << " R : Rest." << std::endl;
-	std::cout << " U : move up." << std::endl;
-	std::cout << " Z : Show stats." << std::endl;
-	std::cout << " p : Finish level." << std::endl;
+	std::cout << " U : move up the stairs." << std::endl;
+	std::cout << " Z : Show stats." << std::endl;	
 	std::cout << " H : help." << std::endl;
 	std::cout << " Q : quit." << std::endl;
 	std::cout << "HELP" << std::endl << "_________________________________________" << std::endl;

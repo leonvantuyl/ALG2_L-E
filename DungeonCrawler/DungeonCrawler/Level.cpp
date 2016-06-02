@@ -135,34 +135,44 @@ void Level::grenade()
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
 	Room* current = currentPosition;
-	visitedRooms.push_back( currentPosition );
 	bool found = false;
+
+
+	visitedRooms.push_back(currentPosition);
+	roomQueue.push(currentPosition);
 
 	while(!found)
 	{
-		if( !roomQueue.empty() )
+		if (!roomQueue.empty())
 		{
 			current = roomQueue.front();
 			roomQueue.pop();
+		}
+		else
+		{
+			found = true;
 		}
 
 		//Search current connected rooms
 		vector<Room*> currentConnected = current->getConnectedRooms();
 		for( Room* room : currentConnected )
 		{
-			Edge edge = Edge(current,room);
 			if( !compareRoomWithVector( room, visitedRooms ) )
 			{
 				mst.push_back( Edge( current, room ) );
 				visitedRooms.push_back( room );
 				roomQueue.push( room );
 			}
-			else
-			{
-				break;
+			else if (!compareEdgeWithVector(Edge(current, room),mst))
+			{				
+				RoomDirection direction = current->findCollapseRoomDirection(room);
+				current->removeConnection(direction);
 			}
 		}
+		
 	}
+
+	
 	//TODO Blaast 10-15 corridors op. 
 	//visited corridors worden ook als gesloopt getoond.
 	//Gebruikt de minimum spanning tree
@@ -190,10 +200,14 @@ int Level::magicTalisman()
 	//initial setup
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
-	Room * current;
-	visitedRooms.push_back(currentPosition);
+	Room * current = nullptr;	
 	bool found = false;
 	int requiredSteps = 0;
+
+	//first room setup
+	visitedRooms.push_back(currentPosition);
+	roomQueue.push(currentPosition);
+	currentPosition->requiredSteps = 0;
 
 	//Check if the first room is the exit. if true then while loop should be skiped
 	if (currentPosition->isExit()) {
@@ -203,12 +217,15 @@ int Level::magicTalisman()
 	//Search until exit room is found
 	while (!found) {
 		//Check next room
-		if (!roomQueue.empty) {
-			current = roomQueue.pop;
+		if (!roomQueue.empty()) {
+			current = roomQueue.front();
+			roomQueue.pop();
 			requiredSteps = current->requiredSteps + 1;
 		}
 		else {
-			//TODO error geen exit ?
+			//error
+			requiredSteps = -1;
+			found = true;
 		}
 
 		//Search current connected rooms
@@ -218,28 +235,23 @@ int Level::magicTalisman()
 				room->requiredSteps = requiredSteps;
 				visitedRooms.push_back(room);
 				roomQueue.push(room);
-				if (room->isExit) {
+				if (room->isExit()) {
 					found = true;
-					requiredSteps;
 				}
 			}
 		}
 	}
-	//Gebruikt breadth first search
-	//Houd rekening met collapse corridors
-
 	return requiredSteps;
 }
 
 //returns true if the current room is contained within the vector of rooms
-bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
-	bool found = false;
+bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {	
 	for (Room* room : rooms) {
 		if (current == room) {
-			found = true;
+			return true;
 		}
 	}
-	return found;
+	return false;
 }
 
 void Level::compass()
@@ -280,17 +292,20 @@ void Level::printLevel() {
 			if (!temp->getVisited())
 			{
 				Room *tempEast = temp->getRoom(RoomDirection::EAST);
-				if (x != levelWidth - 1)
+				if (tempEast == nullptr)
+					std::cout << "   ";
+				else if (x != levelWidth - 1)
 					if (!tempEast->getVisited())
-						std::cout << "???";
+						std::cout << "???";					
 					else
 						std::cout << "---";
 
 				Room *tempSouth = temp->getRoom(RoomDirection::SOUTH);
-
-				if (y != levelHeight - 1)
-					if (!tempSouth->getVisited())
-						bottomConnection += "?   ";
+				if (tempSouth == nullptr)
+					bottomConnection += "    ";
+				else if (y != levelHeight - 1)
+					if(!tempSouth->getVisited())
+						bottomConnection += "?   ";					 
 					else
 						bottomConnection += "|   ";
 
@@ -305,11 +320,10 @@ void Level::printLevel() {
 						std::cout << "---";
 				}
 				if (y != levelHeight - 1) {
-
-					if (temp->hasConnection(RoomDirection::SOUTH))
-						bottomConnection += "|   ";
-					else
+					if (!temp->hasConnection(RoomDirection::SOUTH))
 						bottomConnection += "    ";
+					else
+						bottomConnection += "|   ";
 				}
 			}
 
