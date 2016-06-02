@@ -177,7 +177,7 @@ int Level::magicTalisman()
 			if (!compareRoomWithVector(room, visitedRooms)) {
 				room->requiredSteps = requiredSteps;
 				visitedRooms.push_back(room);
-				roomQueue.push(room);
+				roomQueue.push(room);				
 				if (room->isExit()) {
 					found = true;
 				}

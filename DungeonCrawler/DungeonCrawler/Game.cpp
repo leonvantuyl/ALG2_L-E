@@ -92,6 +92,9 @@ void Game::start(){
 		case 'm':
 			currentLevel->printLevel();
 			break;
+		case  'm?':
+			//TODO cheat mode
+			//currentLevel->printLevel(true);
 		case 'q':
 			running = false;
 		case 't':

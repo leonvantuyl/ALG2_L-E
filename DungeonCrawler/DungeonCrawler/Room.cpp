@@ -31,13 +31,27 @@ Room::~Room()
 {
 }
 
+int Room::getDangerValue()
+{
+	int value = 0;
+	for (EnemyBase enemy : enemys) {
+		value += enemy.getHealth();
+	}
+	for (Trap trap : traps) {
+		value += trap.getDamage();
+	}
+	return value;
+}
+
 string Room::getSymbolCheat(){
 	if (visiting)
 		return "P";
-	else if (visited)
-		return "X";
+	else if (visited & !exit)
+		return "" + getDangerValue();
+	else if (visited & exit)
+		return "S";
 	else
-		return "x";
+		return "X";
 }
 
 string Room::getSymbol(){
@@ -201,8 +215,6 @@ void Room::removeConnection(RoomDirection direction){
 		RoomDirection oppositeDirection = getOpposite(direction);
 		if (opposite->hasConnection(oppositeDirection))
 			opposite->setFromOpposite(oppositeDirection, nullptr);
-		
-
 	}
 	this->connected[direction] = nullptr;
 		

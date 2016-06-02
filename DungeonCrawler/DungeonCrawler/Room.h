@@ -39,7 +39,7 @@ private:
 public:
 	Room();
 	~Room();
-
+	int getDangerValue();
 	int requiredSteps;
 
 	void setRoom(RoomDirection, Room*);
