@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <random>
+#include <queue>
 #include "RandomGenerator.h"
 Level::Level(int id, Player * pl)
 {
@@ -11,10 +12,10 @@ Level::Level(int id, Player * pl)
 	ID = id;
 
 	RandomGenerator rg;
-	levelWidth = rg.getRandom(4,7);
+	levelWidth = rg.getRandom(4, 7);
 	levelHeight = rg.getRandom(4, 7);;
 
-		
+
 
 	//Rooms inladen
 	for (int y = 0; y < levelHeight; y++)
@@ -35,26 +36,26 @@ Level::Level(int id, Player * pl)
 		for (int x = 0; x < levelWidth; x++)
 		{
 			Room *temp;
-				
+
 			temp = &rooms[y][x];
 
 			// Vijand toevoegen op basis van random getal, als level hoger wordt , kans groter
-				
+
 			if (rg.getRandom(0, 5) < (1 + ID))
 				temp->addEnemy(ID);
-					
+
 			//--
 
 			if (x < levelWidth - 1)
-			{					
+			{
 				edges.push_back(Edge(temp, &rooms[y][x + 1], RoomDirection::EAST));
-				temp->setRoom(RoomDirection::EAST, &rooms[y][x+1]);					
+				temp->setRoom(RoomDirection::EAST, &rooms[y][x + 1]);
 			}
-			if (y < levelHeight - 1){
+			if (y < levelHeight - 1) {
 				edges.push_back(Edge(temp, &rooms[y + 1][x], RoomDirection::SOUTH));
 				temp->setRoom(RoomDirection::SOUTH, &rooms[y + 1][x]);
 			}
-					
+
 		}
 	}
 
@@ -76,11 +77,11 @@ Level::~Level()
 
 
 void Level::move(RoomDirection dir)
-{	
+{
 	Room * temp = currentPosition;
 	int damage = currentPosition->getTrapDamage();
-	currentPosition = currentPosition->moveTo(dir);	
-	
+	currentPosition = currentPosition->moveTo(dir);
+
 	//TODO uitbreiden voor ingestorten edges
 	printLevel();
 	if (temp == currentPosition)
@@ -96,7 +97,7 @@ void Level::move(RoomDirection dir)
 		}
 	}
 
-		
+
 }
 
 void Level::showDescription()
@@ -106,10 +107,10 @@ void Level::showDescription()
 	std::cout << currentPosition->getDescription() << std::endl;
 	//TODO enemy hoor je gelijk tegen te komen als je een kamer binnen komt.
 	currentPosition->showEnemys();
-	currentPosition->findEquipment( p1->getAwarenes() );
+	currentPosition->findEquipment(p1->getAwarenes());
 	currentPosition->showEquipment();
-	p1->addXP( 2 );
-	
+	p1->addXP(2);
+
 }
 
 bool Level::isFinished()
@@ -120,7 +121,7 @@ bool Level::isFinished()
 void Level::findBombs()
 {
 	currentPosition->findTraps(p1->getAwarenes());
-	
+
 }
 
 int Level::getTrapDamage()
@@ -135,11 +136,62 @@ void Level::grenade()
 	//Gebruikt de minimum spanning tree
 }
 
-void Level::magicTalisman()
+//TODO test
+int Level::magicTalisman()
 {
-	//TODO toont hoeveel stappen nodig zijn om naar de uitgang te lopen.
+	//initial setup
+	vector<Room*> visitedRooms;
+	queue<Room*> roomQueue;
+	Room * current;
+	visitedRooms.push_back(currentPosition);
+	bool found = false;
+	int requiredSteps = 0;
+
+	//Check if the first room is the exit. if true then while loop should be skiped
+	if (currentPosition->isExit()) {
+		found = true;
+	}
+
+	//Search until exit room is found
+	while (!found) {
+		//Check next room
+		if (!roomQueue.empty) {
+			current = roomQueue.pop;
+			requiredSteps = current->requiredSteps + 1;
+		}
+		else {
+			//TODO error geen exit ?
+		}
+
+		//Search current connected rooms
+		vector<Room*> currentConnected = current->getConnectedRooms();
+		for (Room * room : currentConnected) {
+			if (!compareRoomWithVector(room, visitedRooms)) {
+				room->requiredSteps = requiredSteps;
+				visitedRooms.push_back(room);
+				roomQueue.push(room);
+				if (room->isExit) {
+					found = true;
+					requiredSteps;
+				}
+			}
+		}
+	}
 	//Gebruikt breadth first search
 	//Houd rekening met collapse corridors
+
+	return requiredSteps;
+}
+
+//returns true if the current room is contained within the vector of rooms
+bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
+	bool found = false;
+	for (Room* room : rooms) {
+		if (current == room) {
+			found = true;
+		}
+	}
+	return found;
 }
 
 void Level::compass()
@@ -161,7 +213,7 @@ void Level::pickItems()
 	}
 }
 
-void Level::printLevel(){
+void Level::printLevel() {
 	//TODO toon ook kapotte doorgangen
 	std::system("cls");
 	vector< vector<int> >::iterator row;
@@ -180,31 +232,31 @@ void Level::printLevel(){
 			if (!temp->getVisited())
 			{
 				Room *tempEast = temp->getRoom(RoomDirection::EAST);
-				if (x != levelWidth -1) 
+				if (x != levelWidth - 1)
 					if (!tempEast->getVisited())
 						std::cout << "???";
 					else
 						std::cout << "---";
-				
+
 				Room *tempSouth = temp->getRoom(RoomDirection::SOUTH);
 
-				if (y != levelHeight -1)
+				if (y != levelHeight - 1)
 					if (!tempSouth->getVisited())
 						bottomConnection += "?   ";
 					else
 						bottomConnection += "|   ";
-					
+
 			}
 			else
 			{
-				if (x != levelWidth -1)
+				if (x != levelWidth - 1)
 				{
 					if (!temp->hasConnection(RoomDirection::EAST))
 						std::cout << "   ";
 					else
 						std::cout << "---";
-				}				
-				if (y != levelHeight -1){
+				}
+				if (y != levelHeight - 1) {
 
 					if (temp->hasConnection(RoomDirection::SOUTH))
 						bottomConnection += "|   ";
@@ -212,9 +264,9 @@ void Level::printLevel(){
 						bottomConnection += "    ";
 				}
 			}
-				
-				
-			
+
+
+
 		}
 		std::cout << " " << endl;
 		std::cout << " " << bottomConnection << endl << " " << bottomConnection << endl;
@@ -245,7 +297,7 @@ void Level::setInitialPosition()
 	random_device dev;
 
 	//Start positie van de speler bepalen
-	uniform_int_distribution<int> distExitPosX{ 0, levelWidth -1 };
+	uniform_int_distribution<int> distExitPosX{ 0, levelWidth - 1 };
 	uniform_int_distribution<int> distExitPosY{ 0, levelHeight - 1 };
 	uniform_int_distribution<int> distStartPosX{ 0, levelWidth - 1 };
 	uniform_int_distribution<int> distStartPosY{ 0, levelHeight - 1 };
@@ -279,17 +331,17 @@ void Level::fight()
 		{
 			xp += temp.at(i)->getXP();
 		}
-		
+
 		printFightHelp();
 		std::cout << "Trouble has arrived" << std::endl;
 		bool fighting = true;
-		while (fighting){
+		while (fighting) {
 			char input[100];
 			cout << "Pres a key : ";
 			cin.getline(input, sizeof(input));
-			switch (input[0]){
+			switch (input[0]) {
 			case 'a':
-			{				
+			{
 				for (size_t i = 0; i < temp.size(); i++)
 				{
 					if (temp.at(i)->isAlive())
@@ -297,35 +349,35 @@ void Level::fight()
 				}
 				currentPosition->showEnemys();
 			}
-				
-				break;
+
+			break;
 			case 'r':
 				fighting = false;
 				break;
 			case 'i':
 			{
 				bool picked = false;
-				while( !picked )
+				while (!picked)
 				{
 					char input[100];
 					cout << "Pick your item (q to close inventory) : " << endl;
 					p1->printInventory();
-					cin.getline( input, sizeof( input ) );
-					if( '0' <= input[0] && input[0] <= '9' )
+					cin.getline(input, sizeof(input));
+					if ('0' <= input[0] && input[0] <= '9')
 					{
-						Equipment * tempWep = p1->getEquipment( input[0] - 48 );
-						if( tempWep != nullptr )
+						Equipment * tempWep = p1->getEquipment(input[0] - 48);
+						if (tempWep != nullptr)
 						{
-							for( size_t i = 0; i < temp.size(); i++ )
+							for (size_t i = 0; i < temp.size(); i++)
 							{
-								if( temp.at( i )->isAlive() )
-									temp.at( i )->attackMe( tempWep->getHitpoints() );
-							}	
+								if (temp.at(i)->isAlive())
+									temp.at(i)->attackMe(tempWep->getHitpoints());
+							}
 							picked = true;
 						}
-					
 
-						
+
+
 					}
 					else if (input[0] == 'q')
 					{
@@ -337,8 +389,8 @@ void Level::fight()
 						std::cout << "Insert a number from your inverntory." << endl;
 					}
 				}
-			}				
-				break;
+			}
+			break;
 			default:
 				std::system("cls");
 				std::cout << "unknown key" << std::endl;
@@ -357,25 +409,25 @@ void Level::fight()
 			else
 			{
 				std::cout << "ENEMYS ATTACKING!!" << std::endl;
-				for( size_t i = 0; i < temp.size(); i++ )
+				for (size_t i = 0; i < temp.size(); i++)
 				{
-					if( temp.at( i )->isAlive() )
+					if (temp.at(i)->isAlive())
 					{
-						int rndmAttack = rg.getRandom( 0, 1000 );
-						if( rndmAttack > p1->getDefence() )
+						int rndmAttack = rg.getRandom(0, 1000);
+						if (rndmAttack > p1->getDefence())
 						{
-							int dmg = temp.at( i )->attack();
-							std::cout << temp.at( i )->getDescription() << " did " << dmg << " damage." << std::endl;
-							p1->takeDamage( dmg );
+							int dmg = temp.at(i)->attack();
+							std::cout << temp.at(i)->getDescription() << " did " << dmg << " damage." << std::endl;
+							p1->takeDamage(dmg);
 						}
 						else
 						{
 							std::cout << "Thanks to your great defence he missed" << std::endl;
 						}
-						
-						
+
+
 					}
-						
+
 				}
 			}
 		}

@@ -151,6 +151,17 @@ void Room::showDoors(){
 
 }
 
+//Convert map to vector for easy use
+vector<Room*> Room::getConnectedRooms()
+{
+	vector<Room *> connectedRooms;	
+		for (auto const &ent : connected) {			
+			if (ent.second != nullptr)
+				connectedRooms.push_back(ent.second);
+		}
+	return connectedRooms;
+}
+
 RoomDirection Room::getOpposite(RoomDirection r){
 	switch (r){
 	case RoomDirection::NORTH:

@@ -40,10 +40,12 @@ public:
 	Room();
 	~Room();
 
+	int requiredSteps;
+
 	void setRoom(RoomDirection, Room*);
 	void setFromOpposite(RoomDirection, Room*);
 	void showDoors();
-
+	vector<Room*> getConnectedRooms();
 
 	std::vector<Equipment> pickItems(int);
 	void addEnemy(int lvl);
