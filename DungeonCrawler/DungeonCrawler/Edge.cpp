@@ -10,6 +10,12 @@ Edge::Edge(Room * room1, Room * room2, RoomDirection dir)
 	direction = dir;
 }
 
+Edge::Edge(Room* room1, Room* room2)
+{
+	r1 = room1;
+	r2 = room2;
+}
+
 
 Edge::~Edge()
 {

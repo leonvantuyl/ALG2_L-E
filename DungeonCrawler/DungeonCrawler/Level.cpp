@@ -131,9 +131,57 @@ int Level::getTrapDamage()
 
 void Level::grenade()
 {
+	vector<Edge> mst;
+	vector<Room*> visitedRooms;
+	queue<Room*> roomQueue;
+	Room* current = currentPosition;
+	visitedRooms.push_back( currentPosition );
+	bool found = false;
+
+	while(!found)
+	{
+		if( !roomQueue.empty() )
+		{
+			current = roomQueue.front();
+			roomQueue.pop();
+		}
+
+		//Search current connected rooms
+		vector<Room*> currentConnected = current->getConnectedRooms();
+		for( Room* room : currentConnected )
+		{
+			Edge edge = Edge(current,room);
+			if( !compareRoomWithVector( room, visitedRooms ) )
+			{
+				mst.push_back( Edge( current, room ) );
+				visitedRooms.push_back( room );
+				roomQueue.push( room );
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
 	//TODO Blaast 10-15 corridors op. 
 	//visited corridors worden ook als gesloopt getoond.
 	//Gebruikt de minimum spanning tree
+}
+
+bool Level::compareEdgeWithVector( Edge current, vector<Edge> edges )
+{
+	bool found = false;
+	for( Edge edge : edges )
+	{
+		if( edge.r1 == current.r1 || edge.r1 == current.r2 )
+		{
+			if( edge.r2 == current.r1 || edge.r2 == current.r2 )
+			{
+				found = true;
+			}
+		}
+	}
+	return found;
 }
 
 //TODO test
