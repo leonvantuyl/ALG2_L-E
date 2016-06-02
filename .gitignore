@@ -95,3 +95,5 @@ $RECYCLE.BIN/
 *.tlog
 *.tlog
 *.idb
+*.tlog
+DungeonCrawler/DungeonCrawler.VC.VC.opendb

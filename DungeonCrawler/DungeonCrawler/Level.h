@@ -14,7 +14,7 @@
 		bool finished;
 		std::vector < std::vector<Room> >  rooms;
 		std::vector < Edge >  edges;
-		bool compareRoomWithVector(Room*, vector<Room *>)
+		bool compareRoomWithVector(Room*, vector<Room *>);
 
 		void minimumSpanningTree();
 		void breadthFirstSearch();

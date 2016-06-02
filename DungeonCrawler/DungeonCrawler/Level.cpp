@@ -142,7 +142,7 @@ int Level::magicTalisman()
 	//initial setup
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
-	Room * current;
+	Room * current = nullptr;
 	visitedRooms.push_back(currentPosition);
 	bool found = false;
 	int requiredSteps = 0;
@@ -155,8 +155,9 @@ int Level::magicTalisman()
 	//Search until exit room is found
 	while (!found) {
 		//Check next room
-		if (!roomQueue.empty) {
-			current = roomQueue.pop;
+		if (!roomQueue.empty()) {
+			current = roomQueue.front();
+			roomQueue.pop();
 			requiredSteps = current->requiredSteps + 1;
 		}
 		else {
@@ -170,7 +171,7 @@ int Level::magicTalisman()
 				room->requiredSteps = requiredSteps;
 				visitedRooms.push_back(room);
 				roomQueue.push(room);
-				if (room->isExit) {
+				if (room->isExit()) {
 					found = true;
 					requiredSteps;
 				}
