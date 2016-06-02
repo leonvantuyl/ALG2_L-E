@@ -60,12 +60,12 @@ Level::Level(int id, Player * pl)
 
 	setInitialPosition();
 
-	Room *temp = &rooms[0][0];
+	/*Room *temp = &rooms[0][0];
 	temp->removeConnection(RoomDirection::NORTH);
 	temp = &rooms[3][3];
 	temp->removeConnection(RoomDirection::EAST);
 	temp = &rooms[1][1];
-	temp->removeConnection(RoomDirection::WEST);
+	temp->removeConnection(RoomDirection::WEST);*/
 }
 
 
@@ -81,7 +81,7 @@ void Level::move(RoomDirection dir)
 	int damage = currentPosition->getTrapDamage();
 	currentPosition = currentPosition->moveTo(dir);	
 	
-	
+	//TODO uitbreiden voor ingestorten edges
 	printLevel();
 	if (temp == currentPosition)
 	{
@@ -104,6 +104,7 @@ void Level::showDescription()
 	printLevel();
 	findBombs();
 	std::cout << currentPosition->getDescription() << std::endl;
+	//TODO enemy hoor je gelijk tegen te komen als je een kamer binnen komt.
 	currentPosition->showEnemys();
 	currentPosition->findEquipment( p1->getAwarenes() );
 	currentPosition->showEquipment();
@@ -127,6 +128,30 @@ int Level::getTrapDamage()
 	return currentPosition->getTrapDamage();
 }
 
+void Level::grenade()
+{
+	//TODO Blaast 10-15 corridors op. 
+	//visited corridors worden ook als gesloopt getoond.
+	//Gebruikt de minimum spanning tree
+}
+
+void Level::magicTalisman()
+{
+	//TODO toont hoeveel stappen nodig zijn om naar de uitgang te lopen.
+	//Gebruikt breadth first search
+	//Houd rekening met collapse corridors
+}
+
+void Level::compass()
+{
+	//TODO Vind de veiligste weg naar de exit print de route uit (noord noord oost west bijv.)
+	/*veiligheid is gebaseerd op total enemy HP en traps hoe hoger des te gevaarlijker. Gebruik dijkstras algorithme*/
+
+	//TODO cheat code toevoegen om de hele map te zien met -HP waardes per kamer.
+
+	//dijkstrasAlgorithm();
+}
+
 void Level::pickItems()
 {
 	vector<Equipment> temp = currentPosition->pickItems(p1->getAwarenes());
@@ -137,7 +162,7 @@ void Level::pickItems()
 }
 
 void Level::printLevel(){
-
+	//TODO toon ook kapotte doorgangen
 	std::system("cls");
 	vector< vector<int> >::iterator row;
 	vector<int>::iterator col;
@@ -154,10 +179,21 @@ void Level::printLevel(){
 
 			if (!temp->getVisited())
 			{
-				if (x != levelWidth -1)
-					std::cout << "???";
+				Room *tempEast = temp->getRoom(RoomDirection::EAST);
+				if (x != levelWidth -1) 
+					if (!tempEast->getVisited())
+						std::cout << "???";
+					else
+						std::cout << "---";
+				
+				Room *tempSouth = temp->getRoom(RoomDirection::SOUTH);
+
 				if (y != levelHeight -1)
-					bottomConnection += "?   ";
+					if (!tempSouth->getVisited())
+						bottomConnection += "?   ";
+					else
+						bottomConnection += "|   ";
+					
 			}
 			else
 			{

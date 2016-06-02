@@ -22,7 +22,7 @@ const string  RoomColor[]
 class Room
 {
 private:
-	map<RoomDirection, Room*> connected;
+	map<RoomDirection, Room*> connected; //Map containing all possible corridors
 	string size;
 	string content;
 	string description;
@@ -63,13 +63,18 @@ public:
 	int getScore();
 	int getTrapDamage();
 	std::vector<EnemyBase*> getEnemysAlive();
-	Room * moveTo(RoomDirection);
+	Room* moveTo(RoomDirection);
 	Room* getRoom(RoomDirection);
 	string getDescription();
 	string getSymbol();
 	string getSymbolCheat();
 	bool getVisited();
 	RoomDirection getOpposite(RoomDirection);
+
+	//TODO invullen
+	void collapseDirection(RoomDirection);
+	void findCollapseRoomDirection(Room*);
+
 };
 
 

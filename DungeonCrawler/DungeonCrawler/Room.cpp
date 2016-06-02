@@ -43,8 +43,10 @@ string Room::getSymbolCheat(){
 string Room::getSymbol(){
 	if (visiting)
 		return "P";
-	else if (visited)
+	else if (visited & !exit)
 		return "X";
+	else if (visited & exit)
+		return "S";
 	else 
 		return ".";
 	
@@ -95,6 +97,7 @@ int Room::getTrapDamage()
 }
 Room * Room::moveTo(RoomDirection dir)
 {
+	//TODO ingestorte edge controlen
 	if (hasConnection(dir))
 	{
 		connected[dir]->setVisiting(true);
@@ -107,6 +110,11 @@ Room * Room::moveTo(RoomDirection dir)
 		return this;
 	}
 
+}
+
+Room* Room::getRoom(RoomDirection direction)
+{
+	return connected.at(direction);
 }
 
 string Room::getDescription(){
@@ -157,6 +165,16 @@ RoomDirection Room::getOpposite(RoomDirection r){
 	default:
 		return RoomDirection::EAST;
 	}
+}
+
+void Room::collapseDirection(RoomDirection)
+{
+	//TODO set room in given roomdirection to null
+}
+
+void Room::findCollapseRoomDirection(Room *)
+{
+	//TODO find roomdirection with given room and set it's room to null with collapseDirection(roomdir)
 }
 
 bool Room::hasConnection(RoomDirection direction){
