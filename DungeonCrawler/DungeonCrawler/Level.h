@@ -16,9 +16,6 @@
 		std::vector < Edge >  edges;
 		bool compareRoomWithVector(Room*, vector<Room *>);
 
-		void minimumSpanningTree();
-		void breadthFirstSearch();
-		void dijkstrasAlgorithm();
 	public:
 		Level(int id, Player * pl);
 		~Level();

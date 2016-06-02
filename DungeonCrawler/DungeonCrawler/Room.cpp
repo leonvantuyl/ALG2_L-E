@@ -69,7 +69,7 @@ void Room::setVisited()
 
 void Room::findTraps(int lvl)
 {
-	for (int i = 0; i < traps.size(); i++)
+	for (size_t i = 0; i < traps.size(); i++)
 	{
 		if( lvl > traps.at( i ).getMinimalLevel() )
 		{
@@ -88,7 +88,7 @@ void Room::findTraps(int lvl)
 int Room::getTrapDamage()
 {
 	int returnVal = 0;
-	for (int i = 0; i < traps.size(); i++)
+	for (size_t i = 0; i < traps.size(); i++)
 	{
 		if (!traps.at(i).getFound())
 			returnVal += traps.at(i).getDamage();
@@ -226,7 +226,7 @@ void Room::showEnemys(){
 
 void Room::fight()
 {
-	int xp;
+	//TODO ? deze variable werd niet gebruikt. int xp;
 	if (enemys.size() < 1)
 	{
 		std::cout << "No enemys in the room." << std::endl;
@@ -240,7 +240,7 @@ void Room::fight()
 		bool fighting = true;
 		while (fighting){
 			char input[100];
-			cout << "Pres a key : ";
+			cout << "Press a key : ";
 			cin.getline(input, sizeof(input));
 			switch (input[0]){
 			case 'f':
@@ -266,7 +266,7 @@ void Room::fight()
 std::vector<EnemyBase*> Room::getEnemysAlive()
 {
 	std::vector<EnemyBase*> temp;
-	for (int i = 0; i < enemys.size(); i++)
+	for (size_t i = 0; i < enemys.size(); i++)
 	{
 		if (enemys.at(i).isAlive())
 		{
@@ -303,7 +303,7 @@ void Room::setExit(int lvl)
 int Room::getScore()
 {
 	int returnValue = 0;
-	for (int i = 0; i < enemys.size(); i++)
+	for (size_t i = 0; i < enemys.size(); i++)
 	{ 
 		returnValue += 20;
 	}
@@ -315,12 +315,12 @@ std::vector<Equipment> Room::pickItems(int awareness)
 	vector<Equipment> temp;
 	if (!checkEnemysAlive())
 	{
-		for (int i = 0; i < equipment.size(); i++)
+		for (size_t i = 0; i < equipment.size(); i++)
 		{
 			if (equipment.at(i).getAwarenes() <= awareness)
 				temp.push_back(equipment.at(i));
 		}
-		for (int i = 0; i < equipment.size(); i++)
+		for (size_t i = 0; i < equipment.size(); i++)
 		{
 			if (equipment.at(i).getAwarenes() <= awareness)
 				equipment.erase(equipment.begin() + i);
@@ -342,13 +342,13 @@ std::vector<Equipment> Room::pickItems(int awareness)
 void Room::showEquipment()
 {
 	std::cout << "Equipment that you did find in this room:" << std::endl;
-	for (int i = 0; i < equipment.size(); i++)
+	for (size_t i = 0; i < equipment.size(); i++)
 	{
 		if (equipment.at(i).isFound())
 			std::cout << equipment.at(i).getName() << std::endl << std::endl;
 	}
 	std::cout << std::endl << "Equipment that is hidden from eyes:" << std::endl;
-	for (int i = 0; i < equipment.size(); i++)
+	for (size_t i = 0; i < equipment.size(); i++)
 	{
 		if (!equipment.at(i).isFound())
 			std::cout << equipment.at(i).getName() << std::endl;
@@ -359,7 +359,7 @@ void Room::showEquipment()
 
 void Room::findEquipment(int awareness)
 {
-	for (int i = 0; i < equipment.size(); i++)
+	for (size_t i = 0; i < equipment.size(); i++)
 	{
 		if (equipment.at(i).getAwarenes() <= awareness)
 			equipment.at(i).setFound();

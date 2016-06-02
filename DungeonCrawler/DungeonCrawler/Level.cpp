@@ -136,7 +136,8 @@ void Level::grenade()
 	//Gebruikt de minimum spanning tree
 }
 
-//TODO test
+//The magicTalisman uses a breadth first search algorithm to find the stairs from your current position within the least amount of steps.
+//Returns the minimal amount of steps needed.
 int Level::magicTalisman()
 {
 	//initial setup
@@ -151,7 +152,7 @@ int Level::magicTalisman()
 	roomQueue.push(currentPosition);
 	currentPosition->requiredSteps = 0;
 
-	//Check if the first room is the exit. if true then while loop should be skiped
+	//Check if the first room is the exit. if true then while loop should be skiped.
 	if (currentPosition->isExit()) {
 		found = true;
 	}
@@ -209,7 +210,7 @@ void Level::compass()
 void Level::pickItems()
 {
 	vector<Equipment> temp = currentPosition->pickItems(p1->getAwarenes());
-	for (int i = 0; i < temp.size(); i++)
+	for (size_t i = 0; i < temp.size(); i++)
 	{
 		p1->addEquipment(temp.at(i));
 	}

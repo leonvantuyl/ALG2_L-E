@@ -30,7 +30,7 @@ public:
 	int getMaxHealth();
 	void takeDamage(int);
 	void printInventory();
-	Equipment* getEquipment( int );
+	Equipment* getEquipment(size_t);
 	void rest();
 	bool isAlive();
 };
