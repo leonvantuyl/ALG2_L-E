@@ -142,10 +142,14 @@ int Level::magicTalisman()
 	//initial setup
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
-	Room * current = nullptr;
-	visitedRooms.push_back(currentPosition);
+	Room * current = nullptr;	
 	bool found = false;
 	int requiredSteps = 0;
+
+	//first room setup
+	visitedRooms.push_back(currentPosition);
+	roomQueue.push(currentPosition);
+	currentPosition->requiredSteps = 0;
 
 	//Check if the first room is the exit. if true then while loop should be skiped
 	if (currentPosition->isExit()) {
@@ -161,7 +165,9 @@ int Level::magicTalisman()
 			requiredSteps = current->requiredSteps + 1;
 		}
 		else {
-			//TODO error geen exit ?
+			//error
+			requiredSteps = -1;
+			found = true;
 		}
 
 		//Search current connected rooms
@@ -173,26 +179,21 @@ int Level::magicTalisman()
 				roomQueue.push(room);
 				if (room->isExit()) {
 					found = true;
-					requiredSteps;
 				}
 			}
 		}
 	}
-	//Gebruikt breadth first search
-	//Houd rekening met collapse corridors
-
 	return requiredSteps;
 }
 
 //returns true if the current room is contained within the vector of rooms
-bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
-	bool found = false;
+bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {	
 	for (Room* room : rooms) {
 		if (current == room) {
-			found = true;
+			return true;
 		}
 	}
-	return found;
+	return false;
 }
 
 void Level::compass()
