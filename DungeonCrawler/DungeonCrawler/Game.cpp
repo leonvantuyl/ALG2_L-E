@@ -44,7 +44,7 @@ void Game::start(){
 		}
 			
 		char input[100];
-		cout << "Pres a key : ";
+		cout << "Press a key : ";
 		cin.getline(input, sizeof(input));
 		switch (input[0]){
 		case 'w':
@@ -92,11 +92,14 @@ void Game::start(){
 		case 'm':
 			currentLevel->printLevel();
 			break;
+		case  'm?':
+			//TODO cheat mode
+			//currentLevel->printLevel(true);
 		case 'q':
 			running = false;
 		case 't':
-			std::cout << "You look into your magic talisman" << std::endl << "The magic talisman reveals a number through it's crystal. " << std::endl;
-			std::cout << currentLevel->magicTalisman() << " rooms remaining to the stairs" << std::endl;
+			std::cout << "You look into your magic talisman." << std::endl << "The magic talisman reveals a number through it's crystal. " << std::endl;
+			std::cout << currentLevel->magicTalisman() << " Room(s) remaining to the stairs." << std::endl;
 			break;
 		case 'g':
 			currentLevel->grenade();

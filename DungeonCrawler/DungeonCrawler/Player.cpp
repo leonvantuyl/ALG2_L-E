@@ -32,12 +32,12 @@ void Player::showStats()
 
 void Player::printInventory()
 {
-	for (int i = 0; i < inventory.size(); i++)
+	for (size_t i = 0; i < inventory.size(); i++)
 	{
 		std::cout << i << ": " << inventory.at(i).getName() << std::endl;
 	}
 }
-Equipment* Player::getEquipment( int index)
+Equipment* Player::getEquipment( size_t index)
 {
 	if( index > inventory.size() -1 )
 	{

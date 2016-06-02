@@ -10,7 +10,7 @@ class Game
 private:
 	Level* currentLevel;
 	int levelID = 0;
-	int currentLevelID;
+	size_t currentLevelID;
 	Player p1 = Player("Dave");
 	std::vector<Level*> *levels;
 public:

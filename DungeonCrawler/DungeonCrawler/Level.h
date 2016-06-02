@@ -16,6 +16,7 @@
 		std::vector < Edge >  edges;
 		bool compareRoomWithVector( Room*, vector<Room *> );
 		bool compareEdgeWithVector( Edge current, vector<Edge> rooms );
+
 	public:
 		Level(int id, Player * pl);
 		~Level();
