@@ -4,17 +4,18 @@
 #include "Boss.h"
 #include "RandomGenerator.h"
 
-Room::Room()
+Room::Room(int room)
 {
+	number = room;
 	Boss endBoss = Boss(10);
 	RandomGenerator rg;
 	size = RoomSize[rg.getRandom(0, 2)];
 	content = RoomContent[rg.getRandom(0, 3)];
 	description = RoomDescription[rg.getRandom(0, 3)];
 	appearance = RoomAppearance[rg.getRandom(0, 3)];
-	lighting = RoomLighting[rg.getRandom(0,3)];
-	color = RoomColor[rg.getRandom( 0, 3 )];
-	connected[RoomDirection::NORTH] =  nullptr;
+	lighting = RoomLighting[rg.getRandom(0, 3)];
+	color = RoomColor[rg.getRandom(0, 3)];
+	connected[RoomDirection::NORTH] = nullptr;
 	connected[RoomDirection::EAST] = nullptr;
 	connected[RoomDirection::SOUTH] = nullptr;
 	connected[RoomDirection::WEST] = nullptr;
@@ -22,7 +23,7 @@ Room::Room()
 	visiting = false;
 	exit = false;
 	equipment.push_back(Equipment());
-	if( rg.getRandom( 0, 100 ) < 20 )
+	if (rg.getRandom(0, 100) < 20)
 		traps.push_back(Trap());
 }
 
@@ -43,7 +44,7 @@ string Room::getDangerValue()
 	return to_string(value);
 }
 
-string Room::getSymbolCheat(){
+string Room::getSymbolCheat() {
 	if (visiting)
 		return "P";
 	else if (!exit)
@@ -54,16 +55,16 @@ string Room::getSymbolCheat(){
 		return "X";
 }
 
-string Room::getSymbol(){
+string Room::getSymbol() {
 	if (visiting)
 		return "P";
 	else if (visited & !exit)
 		return "X";
 	else if (visited & exit)
 		return "S";
-	else 
+	else
 		return ".";
-	
+
 }
 
 bool Room::getVisited()
@@ -93,17 +94,17 @@ void Room::findTraps(int lvl)
 {
 	for (size_t i = 0; i < traps.size(); i++)
 	{
-		if( lvl > traps.at( i ).getMinimalLevel() )
+		if (lvl > traps.at(i).getMinimalLevel())
 		{
-			traps.at( i ).setFound();
+			traps.at(i).setFound();
 			cout << "Trap found" << endl;
 		}
 		else
 		{
 
-			cout << "Level to low to find the trap " << traps.at( i ).getMinimalLevel() << "." << endl;
+			cout << "Level to low to find the trap " << traps.at(i).getMinimalLevel() << "." << endl;
 		}
-			
+
 	}
 }
 
@@ -119,7 +120,6 @@ int Room::getTrapDamage()
 }
 Room * Room::moveTo(RoomDirection dir)
 {
-	//TODO ingestorte edge controlen
 	if (hasConnection(dir))
 	{
 		connected[dir]->setVisiting(true);
@@ -128,7 +128,7 @@ Room * Room::moveTo(RoomDirection dir)
 		return connected[dir];
 	}
 	else
-	{				
+	{
 		return this;
 	}
 
@@ -139,27 +139,25 @@ Room* Room::getRoom(RoomDirection direction)
 	return connected.at(direction);
 }
 
-string Room::getDescription(){
+string Room::getDescription() {
 	string returnVal = "";
 	if (exit)
 		returnVal += "THIS IS THE EXIT!!  \n";
-	returnVal += "the " +color + " "+ appearance + " " + description + " has a very " + size + " size, there is a " + lighting + " above a " + content;
+	returnVal += "the " + color + " " + appearance + " " + description + " has a very " + size + " size, there is a " + lighting + " above a " + content;
 	return returnVal;
 }
 
-void Room::setRoom(RoomDirection dir, Room* r){
+void Room::setRoom(RoomDirection dir, Room* r) {
 	connected[dir] = r;
 	r->setFromOpposite(getOpposite(dir), this);
 }
 
-
-
-void Room::setFromOpposite(RoomDirection dir, Room* r){
+void Room::setFromOpposite(RoomDirection dir, Room* r) {
 	connected[dir] = r;
 
 }
 
-void Room::showDoors(){
+void Room::showDoors() {
 	std::system("cls");
 	std::cout << "VERBINDINGEN" << std::endl << "_________________________________________" << std::endl;
 	if (connected[RoomDirection::NORTH] != nullptr)
@@ -176,16 +174,16 @@ void Room::showDoors(){
 //Convert map to vector for easy use
 vector<Room*> Room::getConnectedRooms()
 {
-	vector<Room *> connectedRooms;	
-		for (auto const &ent : connected) {			
-			if (ent.second != nullptr)
-				connectedRooms.push_back(ent.second);
-		}
+	vector<Room *> connectedRooms;
+	for (auto const &ent : connected) {
+		if (ent.second != nullptr)
+			connectedRooms.push_back(ent.second);
+	}
 	return connectedRooms;
 }
 
-RoomDirection Room::getOpposite(RoomDirection r){
-	switch (r){
+RoomDirection Room::getOpposite(RoomDirection r) {
+	switch (r) {
 	case RoomDirection::NORTH:
 		return RoomDirection::SOUTH;
 		break;
@@ -200,18 +198,13 @@ RoomDirection Room::getOpposite(RoomDirection r){
 	}
 }
 
-void Room::collapseDirection(RoomDirection roomDirection)
-{
-	//TODO set room in given roomdirection to null
-}
-
 RoomDirection Room::findCollapseRoomDirection(Room* room)
 {
 	typedef std::map<RoomDirection, Room*>::iterator it_type;
 	for (it_type iterator = connected.begin(); iterator != connected.end(); iterator++) {
 		// iterator->first = key
 		// iterator->second = value
-		
+
 		if (iterator->second == room)
 		{
 			//brokenConnections.at(iterator->first) = true;
@@ -221,13 +214,13 @@ RoomDirection Room::findCollapseRoomDirection(Room* room)
 	return RoomDirection::ERROR;
 }
 
-bool Room::hasConnection(RoomDirection direction){
+bool Room::hasConnection(RoomDirection direction) {
 	if (this->connected[direction] != nullptr)
 		return true;
 	return false;
 }
 
-void Room::removeConnection(RoomDirection direction){
+void Room::removeConnection(RoomDirection direction) {
 	if (hasConnection(direction))
 	{
 		Room * opposite = this->connected[direction];
@@ -236,7 +229,7 @@ void Room::removeConnection(RoomDirection direction){
 			opposite->setFromOpposite(oppositeDirection, nullptr);
 	}
 	this->connected[direction] = nullptr;
-		
+
 }
 
 void Room::addEnemy(int lvl)
@@ -245,13 +238,13 @@ void Room::addEnemy(int lvl)
 }
 
 
-void Room::showEnemys(){
+void Room::showEnemys() {
 	std::cout << enemys.size() << " ENEMYS" << std::endl;
 	for (size_t i = 0; i < enemys.size(); i++)
 	{
 		std::cout << enemys.at(i).getDescription() << std::endl;
 	}
-	std::cout <<std::endl;
+	std::cout << std::endl;
 }
 
 
@@ -269,11 +262,11 @@ void Room::fight()
 	else
 	{
 		bool fighting = true;
-		while (fighting){
+		while (fighting) {
 			char input[100];
 			cout << "Press a key : ";
 			cin.getline(input, sizeof(input));
-			switch (input[0]){
+			switch (input[0]) {
 			case 'f':
 				for (size_t i = 0; i < enemys.size(); i++)
 				{
@@ -328,14 +321,14 @@ bool Room::isExit()
 void Room::setExit(int lvl)
 {
 	exit = true;
-	enemys.push_back( Boss(lvl) );
+	enemys.push_back(Boss(lvl));
 }
 
 int Room::getScore()
 {
 	int returnValue = 0;
 	for (size_t i = 0; i < enemys.size(); i++)
-	{ 
+	{
 		returnValue += 20;
 	}
 	return returnValue;
@@ -356,7 +349,7 @@ std::vector<Equipment> Room::pickItems(int awareness)
 			if (equipment.at(i).getAwarenes() <= awareness)
 				equipment.erase(equipment.begin() + i);
 		}
-		
+
 		if (temp.size() == 0)
 			std::cout << "No equipment found" << std::endl;
 		else
@@ -395,4 +388,11 @@ void Room::findEquipment(int awareness)
 		if (equipment.at(i).getAwarenes() <= awareness)
 			equipment.at(i).setFound();
 	}
+}
+
+void Room::print(int number) {
+	if (!isExit())
+		std::cout << to_string(number) << " : " << currentValueDijkstra << std::endl;
+	else
+		std::cout << to_string(number) << " : exit" << std::endl;
 }

@@ -35,12 +35,13 @@ private:
 	std::vector<EnemyBase> enemys;
 	std::vector<Trap> traps;
 	std::vector<Equipment> equipment;
-
+	int number;
 public:
-	Room();
+	Room(int);
 	~Room();
 	string getDangerValue();
 	int requiredSteps;
+	int currentValueDijkstra;
 
 	void setRoom(RoomDirection, Room*);
 	void setFromOpposite(RoomDirection, Room*);
@@ -64,6 +65,7 @@ public:
 	bool isExit();
 	int getScore();
 	int getTrapDamage();
+	void print(int number);
 	std::vector<EnemyBase*> getEnemysAlive();
 	Room* moveTo(RoomDirection);
 	Room* getRoom(RoomDirection);
@@ -73,8 +75,9 @@ public:
 	bool getVisited();
 	void killAllEnemys();
 	RoomDirection getOpposite(RoomDirection);
+	void printDirection(Room *);
 
-	//TODO invullen
+	
 	void collapseDirection(RoomDirection);
 	RoomDirection findCollapseRoomDirection(Room*);
 

@@ -107,6 +107,9 @@ void Game::start(){
 			currentLevel->printLevel(false);
 			std::cout << "You throw the grenade at the enemy, it explodes and the whole dungeon shakes!" << std::endl << "The enemys are no more than ashes, but it feels like the dungeon has changed." << std::endl;
 			break;
+		case 'c':
+			currentLevel->compass();
+			break;
 		default:
 			std::system("cls");
 			std::cout << "unknown key" << std::endl;

@@ -15,15 +15,15 @@ Level::Level(int id, Player * pl)
 	levelWidth = rg.getRandom(4, 7);
 	levelHeight = rg.getRandom(4, 7);;
 
-
-
+	int number = 0;
 	//Rooms inladen
 	for (int y = 0; y < levelHeight; y++)
 	{
 		std::vector<Room> temp;
 		for (int x = 0; x < levelWidth; x++)
 		{
-			temp.push_back(Room());
+			number++;
+			temp.push_back(Room(number));
 		}
 		rooms.push_back(temp);
 	}
@@ -268,14 +268,127 @@ bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
 
 void Level::compass()
 {
-	std::vector<Room*> closedList;
-	std::vector<Room*> openList;
-	//TODO Vind de veiligste weg naar de exit print de route uit (noord noord oost west bijv.)
-	/*veiligheid is gebaseerd op total enemy HP en traps hoe hoger des te gevaarlijker. Gebruik dijkstras algorithme*/
+	//Reset so distances are 0(current) and -1(others)
+	resetDijkstra();
 
-	//TODO cheat code toevoegen om de hele map te zien met -HP waardes per kamer.
+	//initial setup
+	vector<Room*> spt;
+	vector<Room*> sptSet;
+	Room * current = currentPosition;
+	sptSet.push_back(current);
+	bool found = false;
 
-	//dijkstrasAlgorithm();
+	//Check if this is the exit.
+	if (current->isExit()) {
+		found = true;
+		spt.push_back(current);
+		std::cout << "already at the exit" << std::endl;
+	}
+
+	//loop
+	while (!found) {
+		//Pick next lowest value;	
+		current = sptSet.front();
+		for (Room * room : sptSet) {
+			if (!room->isExit() && !found) {
+				if (room->currentValueDijkstra < current->currentValueDijkstra) {
+					current = room;
+				}
+			}
+			else if(!found) {
+				current = room;
+				found = true;				
+			}
+		}
+
+		if (!found) {
+			vector<Room*> currentConnected = current->getConnectedRooms();
+			for (Room * room : currentConnected) {
+				//Check if the room already is in the shortest path.
+				if (!compareRoomWithVector(room, spt)) {
+					//check if the room is already in the set of not than add
+					if (!compareRoomWithVector(room, sptSet)) {
+						sptSet.push_back(room);
+						room->currentValueDijkstra = current->currentValueDijkstra + stoi(room->getDangerValue());
+					}
+					else {
+						//calculate new value and replace if needed
+						int calculatedValue = current->currentValueDijkstra + stoi(room->getDangerValue());
+						if (calculatedValue < room->currentValueDijkstra)
+							room->currentValueDijkstra = calculatedValue;
+					}
+				}
+			}
+			//remove current from sptset
+			sptSet.erase(std::remove(sptSet.begin(), sptSet.end(), current), sptSet.end());
+
+		}
+		//push back to shortest path
+		spt.push_back(current);
+	}
+
+	int i = spt.size() - 1;
+	current = spt.back();
+	while (current != spt.front()) {
+		Room * next = spt[i - 1];
+		RoomDirection dir = current->findCollapseRoomDirection(next);
+		if (dir != RoomDirection::ERROR) {
+			switch (dir) {
+			case RoomDirection::EAST:
+				std::cout << "East" << std::endl;;
+				break;
+			case RoomDirection::WEST:
+				std::cout << "West" << std::endl;;
+				break;
+			case RoomDirection::NORTH:
+				std::cout << "North" << std::endl;;
+				break;
+			case RoomDirection::SOUTH:
+				std::cout << "South" << std::endl;;
+				break;
+			}
+			i--;
+			current = spt[i];
+		}
+		else {
+			i--;
+		}
+		
+	}
+
+
+	int number = 0;
+	for (Room * room : spt) {
+		room->print(number);
+		number++;
+	}
+}
+
+void Level::resetDijkstra() {
+	//initial setup
+	vector<Room*> visitedRooms;
+	queue<Room*> roomQueue;
+	Room * current = currentPosition;
+
+	//first room setup
+	visitedRooms.push_back(current);
+	roomQueue.push(current);
+	current->currentValueDijkstra = 0;
+
+	while (!roomQueue.empty()) {
+		current = roomQueue.front();
+		roomQueue.pop();
+
+		//Search current connected rooms
+		vector<Room*> currentConnected = current->getConnectedRooms();
+		for (Room * room : currentConnected) {
+			if (!compareRoomWithVector(room, visitedRooms)) {
+				visitedRooms.push_back(room);
+				roomQueue.push(room);
+				room->currentValueDijkstra = std::numeric_limits<int>::max();;
+			}
+		}
+	}
 }
 
 void Level::pickItems()
@@ -313,7 +426,7 @@ void Level::printLevel(bool cheatMode) {
 				if (tempEast == nullptr)
 					std::cout << "   ";
 				else if (x != levelWidth - 1)
-					if (!tempEast->getVisited())
+					if (!tempEast->getVisited() && !cheatMode)
 						std::cout << "???";
 					else
 						std::cout << "---";
@@ -322,7 +435,7 @@ void Level::printLevel(bool cheatMode) {
 				if (tempSouth == nullptr)
 					bottomConnection += "    ";
 				else if (y != levelHeight - 1)
-					if (!tempSouth->getVisited())
+					if (!tempSouth->getVisited() && !cheatMode)
 						bottomConnection += "?   ";
 					else
 						bottomConnection += "|   ";
@@ -373,7 +486,6 @@ void Level::findEquipment(int awareness)
 
 void Level::setInitialPosition()
 {
-
 	random_device dev;
 
 	//Start positie van de speler bepalen

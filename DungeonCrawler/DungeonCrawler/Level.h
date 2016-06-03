@@ -20,8 +20,8 @@
 	public:
 		Level(int id, Player * pl);
 		~Level();
-		void printLevel(bool);
-		void printVisited();
+		void resetDijkstra();
+		void printLevel(bool);		
 		void move(RoomDirection);
 		void showDescription();
 		void findBombs();
