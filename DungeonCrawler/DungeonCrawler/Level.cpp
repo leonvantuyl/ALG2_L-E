@@ -131,17 +131,19 @@ int Level::getTrapDamage()
 
 void Level::grenade()
 {
+	//Setup 
 	vector<Edge> mst;
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
 	Room* current = currentPosition;
-	bool found = false;
+	int destroyedConnections = 0;
 
-
+	//First room setup
 	visitedRooms.push_back(currentPosition);
 	roomQueue.push(currentPosition);
 
-	while(!found)
+	// Continue while not enough connections destroyed yet 
+	while(destroyedConnections < 10)
 	{
 		if (!roomQueue.empty())
 		{
@@ -150,7 +152,7 @@ void Level::grenade()
 		}
 		else
 		{
-			found = true;
+			destroyedConnections = 11;
 		}
 
 		//Search current connected rooms
@@ -167,6 +169,7 @@ void Level::grenade()
 			{				
 				RoomDirection direction = current->findCollapseRoomDirection(room);
 				current->removeConnection(direction);
+				destroyedConnections++;
 			}
 		}
 		
