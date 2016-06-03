@@ -82,8 +82,7 @@ void Level::move(RoomDirection dir)
 	int damage = currentPosition->getTrapDamage();
 	currentPosition = currentPosition->moveTo(dir);
 
-	//TODO uitbreiden voor ingestorten edges
-	printLevel();
+	printLevel(false);
 	if (temp == currentPosition)
 	{
 		std::cout << "Not able to move in that direction" << std::endl;
@@ -102,7 +101,7 @@ void Level::move(RoomDirection dir)
 
 void Level::showDescription()
 {
-	printLevel();
+	printLevel(false);
 	findBombs();
 	std::cout << currentPosition->getDescription() << std::endl;
 	//TODO enemy hoor je gelijk tegen te komen als je een kamer binnen komt.
@@ -143,7 +142,7 @@ void Level::grenade()
 	roomQueue.push(currentPosition);
 
 	// Continue while not enough connections destroyed yet 
-	while(destroyedConnections < 10)
+	while (destroyedConnections < 10)
 	{
 		if (!roomQueue.empty())
 		{
@@ -157,38 +156,38 @@ void Level::grenade()
 
 		//Search current connected rooms
 		vector<Room*> currentConnected = current->getConnectedRooms();
-		for( Room* room : currentConnected )
+		for (Room* room : currentConnected)
 		{
-			if( !compareRoomWithVector( room, visitedRooms ) )
+			if (!compareRoomWithVector(room, visitedRooms))
 			{
-				mst.push_back( Edge( current, room ) );
-				visitedRooms.push_back( room );
-				roomQueue.push( room );
+				mst.push_back(Edge(current, room));
+				visitedRooms.push_back(room);
+				roomQueue.push(room);
 			}
-			else if (!compareEdgeWithVector(Edge(current, room),mst))
-			{				
+			else if (!compareEdgeWithVector(Edge(current, room), mst))
+			{
 				RoomDirection direction = current->findCollapseRoomDirection(room);
 				current->removeConnection(direction);
 				destroyedConnections++;
 			}
 		}
-		
+
 	}
 
-	
+
 	//TODO Blaast 10-15 corridors op. 
 	//visited corridors worden ook als gesloopt getoond.
 	//Gebruikt de minimum spanning tree
 }
 
-bool Level::compareEdgeWithVector( Edge current, vector<Edge> edges )
+bool Level::compareEdgeWithVector(Edge current, vector<Edge> edges)
 {
 	bool found = false;
-	for( Edge edge : edges )
+	for (Edge edge : edges)
 	{
-		if( edge.r1 == current.r1 || edge.r1 == current.r2 )
+		if (edge.r1 == current.r1 || edge.r1 == current.r2)
 		{
-			if( edge.r2 == current.r1 || edge.r2 == current.r2 )
+			if (edge.r2 == current.r1 || edge.r2 == current.r2)
 			{
 				found = true;
 			}
@@ -205,7 +204,7 @@ int Level::magicTalisman()
 	//initial setup
 	vector<Room*> visitedRooms;
 	queue<Room*> roomQueue;
-	Room * current = nullptr;	
+	Room * current = nullptr;
 	bool found = false;
 	int requiredSteps = 0;
 
@@ -239,7 +238,7 @@ int Level::magicTalisman()
 			if (!compareRoomWithVector(room, visitedRooms)) {
 				room->requiredSteps = requiredSteps;
 				visitedRooms.push_back(room);
-				roomQueue.push(room);				
+				roomQueue.push(room);
 				if (room->isExit()) {
 					found = true;
 				}
@@ -250,7 +249,7 @@ int Level::magicTalisman()
 }
 
 //returns true if the current room is contained within the vector of rooms
-bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {	
+bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
 	for (Room* room : rooms) {
 		if (current == room) {
 			return true;
@@ -278,8 +277,7 @@ void Level::pickItems()
 	}
 }
 
-void Level::printLevel() {
-	//TODO toon ook kapotte doorgangen
+void Level::printLevel(bool cheatMode) {
 	std::system("cls");
 	vector< vector<int> >::iterator row;
 	vector<int>::iterator col;
@@ -292,7 +290,12 @@ void Level::printLevel() {
 		{
 			Room *temp;
 			temp = &rooms[y][x];
-			std::cout << temp->getSymbol();
+			string symbol = "";
+			if (cheatMode)
+				symbol = temp->getSymbolCheat();
+			else
+				symbol = temp->getSymbol();
+			std::cout << symbol;
 
 			if (!temp->getVisited())
 			{
@@ -301,7 +304,7 @@ void Level::printLevel() {
 					std::cout << "   ";
 				else if (x != levelWidth - 1)
 					if (!tempEast->getVisited())
-						std::cout << "???";					
+						std::cout << "???";
 					else
 						std::cout << "---";
 
@@ -309,8 +312,8 @@ void Level::printLevel() {
 				if (tempSouth == nullptr)
 					bottomConnection += "    ";
 				else if (y != levelHeight - 1)
-					if(!tempSouth->getVisited())
-						bottomConnection += "?   ";					 
+					if (!tempSouth->getVisited())
+						bottomConnection += "?   ";
 					else
 						bottomConnection += "|   ";
 
@@ -469,7 +472,7 @@ void Level::fight()
 			if (!currentPosition->checkEnemysAlive())
 			{
 				fighting = false;
-				printLevel();
+				printLevel(false);
 				std::cout << "You killed all enemys, fight ended!" << endl;
 				p1->addXP(xp);
 			}

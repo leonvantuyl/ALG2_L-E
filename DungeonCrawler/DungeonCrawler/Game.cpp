@@ -14,7 +14,7 @@ Game::Game()
 	}
 	currentLevelID = 0;
 	currentLevel = levels->at(0);
-	currentLevel->printLevel();
+	currentLevel->printLevel(false);
 }
 
 
@@ -90,20 +90,21 @@ void Game::start(){
 			printHelp();
 			break;
 		case 'm':
-			currentLevel->printLevel();
+			currentLevel->printLevel(false);
 			break;
-		case  'm?':
-			//TODO cheat mode
-			//currentLevel->printLevel(true);
+		case '?':			
+			currentLevel->printLevel(true);
+			break;
 		case 'q':
 			running = false;
+			break;
 		case 't':
 			std::cout << "You look into your magic talisman." << std::endl << "The magic talisman reveals a number through it's crystal. " << std::endl;
 			std::cout << currentLevel->magicTalisman() << " Room(s) remaining to the stairs." << std::endl;
 			break;
 		case 'g':
 			currentLevel->grenade();
-			currentLevel->printLevel();
+			currentLevel->printLevel(false);
 			break;
 		default:
 			std::system("cls");
@@ -147,7 +148,7 @@ bool Game::checkForFinished()
 		{
 			currentLevelID++;
 			currentLevel = levels->at(currentLevelID);
-			currentLevel->printLevel();
+			currentLevel->printLevel(false);
 
 			std::cout << "Level completed" << std::endl;
 		}

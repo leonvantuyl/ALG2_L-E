@@ -99,3 +99,9 @@ $RECYCLE.BIN/
 DungeonCrawler/DungeonCrawler.VC.VC.opendb
 *.idb
 DungeonCrawler/DungeonCrawler/Debug/DungeonCrawler.tlog/link.read.1.tlog
+DungeonCrawler/DungeonCrawler/Debug/DungeonCrawler.tlog/cl.command.1.tlog
+DungeonCrawler/DungeonCrawler/Debug/DungeonCrawler.tlog/link.command.1.tlog
+*.lastbuildstate
+*.tlog
+DungeonCrawler/DungeonCrawler/Debug/DungeonCrawler.tlog/CL.write.1.tlog
+*.tlog

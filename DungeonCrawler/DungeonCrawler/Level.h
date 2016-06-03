@@ -20,7 +20,7 @@
 	public:
 		Level(int id, Player * pl);
 		~Level();
-		void printLevel();
+		void printLevel(bool);
 		void printVisited();
 		void move(RoomDirection);
 		void showDescription();
