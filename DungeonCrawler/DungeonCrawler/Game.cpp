@@ -106,6 +106,9 @@ void Game::start(){
 			currentLevel->grenade();
 			currentLevel->printLevel(false);
 			break;
+		case 'c':
+			currentLevel->compass();
+			break;
 		default:
 			std::system("cls");
 			std::cout << "unknown key" << std::endl;
