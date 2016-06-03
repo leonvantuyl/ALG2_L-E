@@ -145,11 +145,14 @@ void Level::grenade()
 	// Continue while not enough connections destroyed yet 
 	while(destroyedConnections < 10)
 	{
+		// If there are still rooms not checked
 		if (!roomQueue.empty())
 		{
+			//Move to the next room
 			current = roomQueue.front();
 			roomQueue.pop();
 		}
+		// Stop searching
 		else
 		{
 			destroyedConnections = 11;
@@ -159,14 +162,18 @@ void Level::grenade()
 		vector<Room*> currentConnected = current->getConnectedRooms();
 		for( Room* room : currentConnected )
 		{
+			//If the room isnt visited yet
 			if( !compareRoomWithVector( room, visitedRooms ) )
 			{
+				//Add to MinimalSpanningTree, visited rooms and push found room into the roomqueue
 				mst.push_back( Edge( current, room ) );
 				visitedRooms.push_back( room );
 				roomQueue.push( room );
 			}
+			//If the connection isnt in the MinimalSpanningTree
 			else if (!compareEdgeWithVector(Edge(current, room),mst))
 			{				
+				//Destroyed the connection
 				RoomDirection direction = current->findCollapseRoomDirection(room);
 				current->removeConnection(direction);
 				destroyedConnections++;
@@ -175,6 +182,7 @@ void Level::grenade()
 		
 	}
 
+	currentPosition->killAllEnemys();
 	
 	//TODO Blaast 10-15 corridors op. 
 	//visited corridors worden ook als gesloopt getoond.
@@ -261,6 +269,8 @@ bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
 
 void Level::compass()
 {
+	std::vector<Room*> closedList;
+	std::vector<Room*> openList;
 	//TODO Vind de veiligste weg naar de exit print de route uit (noord noord oost west bijv.)
 	/*veiligheid is gebaseerd op total enemy HP en traps hoe hoger des te gevaarlijker. Gebruik dijkstras algorithme*/
 

@@ -104,6 +104,7 @@ void Game::start(){
 		case 'g':
 			currentLevel->grenade();
 			currentLevel->printLevel();
+			std::cout << "You throw the grenade at the enemy, it explodes and the whole dungeon shakes!" << std::endl << "The enemys are no more than ashes, but it feels like the dungeon has changed." << std::endl;
 			break;
 		default:
 			std::system("cls");

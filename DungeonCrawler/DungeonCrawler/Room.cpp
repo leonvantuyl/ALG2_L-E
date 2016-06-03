@@ -71,6 +71,14 @@ bool Room::getVisited()
 	return visited;
 }
 
+void Room::killAllEnemys()
+{
+	for (size_t i = 0; i < enemys.size(); i++)
+	{
+		enemys.at(i).killEnemy();
+	}
+}
+
 void Room::setVisiting(bool isVisiting)
 {
 	visiting = isVisiting;

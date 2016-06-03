@@ -32,6 +32,12 @@ int EnemyBase::getXP()
 	return attackpoints / 2;
 }
 
+void EnemyBase::killEnemy()
+{
+	health = -1;
+	alive = false;
+}
+
 bool EnemyBase::attackMe(int dmg)
 {
 	health -= dmg;
@@ -51,3 +57,4 @@ bool EnemyBase::attackMe(int dmg)
 bool EnemyBase::isAlive(){
 	return (health > 0);
 }
+

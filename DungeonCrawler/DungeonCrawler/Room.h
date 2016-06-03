@@ -71,6 +71,7 @@ public:
 	string getSymbol();
 	string getSymbolCheat();
 	bool getVisited();
+	void killAllEnemys();
 	RoomDirection getOpposite(RoomDirection);
 
 	//TODO invullen

@@ -20,5 +20,6 @@ public:
 	EnemyBase();
 	~EnemyBase();
 	std::string getDescription();
+	void killEnemy();
 };
 
