@@ -31,7 +31,7 @@ Room::~Room()
 {
 }
 
-int Room::getDangerValue()
+string Room::getDangerValue()
 {
 	int value = 0;
 	for (EnemyBase enemy : enemys) {
@@ -40,15 +40,15 @@ int Room::getDangerValue()
 	for (Trap trap : traps) {
 		value += trap.getDamage();
 	}
-	return value;
+	return to_string(value);
 }
 
 string Room::getSymbolCheat(){
 	if (visiting)
 		return "P";
-	else if (visited & !exit)
-		return "" + getDangerValue();
-	else if (visited & exit)
+	else if (!exit)
+		return getDangerValue();
+	else if (exit)
 		return "S";
 	else
 		return "X";
@@ -207,7 +207,6 @@ void Room::collapseDirection(RoomDirection roomDirection)
 
 RoomDirection Room::findCollapseRoomDirection(Room* room)
 {
-	//TODO find roomdirection with given room and set it's room to null with collapseDirection(roomdir)
 	typedef std::map<RoomDirection, Room*>::iterator it_type;
 	for (it_type iterator = connected.begin(); iterator != connected.end(); iterator++) {
 		// iterator->first = key
@@ -219,6 +218,7 @@ RoomDirection Room::findCollapseRoomDirection(Room* room)
 			return iterator->first;
 		}
 	}
+	return RoomDirection::ERROR;
 }
 
 bool Room::hasConnection(RoomDirection direction){

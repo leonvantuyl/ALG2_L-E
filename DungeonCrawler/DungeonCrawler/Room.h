@@ -6,7 +6,7 @@
 #include <vector>
 #include "Trap.h"
 using namespace std;
-enum class RoomDirection { NORTH, EAST, SOUTH, WEST };
+enum class RoomDirection { NORTH, EAST, SOUTH, WEST, ERROR };
 
 
 const string  RoomSize[]{ "small", "average", "big" };
@@ -39,7 +39,7 @@ private:
 public:
 	Room();
 	~Room();
-	int getDangerValue();
+	string getDangerValue();
 	int requiredSteps;
 
 	void setRoom(RoomDirection, Room*);
