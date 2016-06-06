@@ -266,7 +266,7 @@ bool Level::compareRoomWithVector(Room * current, vector<Room*> rooms) {
 	return false;
 }
 
-void Level::compass()
+void Level::compass(bool cheat)
 {
 	//Reset so distances are 0(current) and -1(others)
 	resetDijkstra();
@@ -329,23 +329,29 @@ void Level::compass()
 
 	int i = spt.size() - 1;
 	current = spt.back();
+	vector<string> output;
 	while (current != spt.front()) {
 		Room * next = spt[i - 1];
 		RoomDirection dir = current->findCollapseRoomDirection(next);
 		if (dir != RoomDirection::ERROR) {
+			//Add direction to the output vector. directions are reversed for readability
 			switch (dir) {
 			case RoomDirection::EAST:
-				std::cout << "East" << std::endl;;
+				output.push_back("West");
 				break;
 			case RoomDirection::WEST:
-				std::cout << "West" << std::endl;;
+				output.push_back("East");				
 				break;
 			case RoomDirection::NORTH:
-				std::cout << "North" << std::endl;;
+				output.push_back("South");				
 				break;
 			case RoomDirection::SOUTH:
-				std::cout << "South" << std::endl;;
+				output.push_back("North");				
 				break;
+			}
+			//cheat function to add enemies on safest route
+			if (cheat) {
+				current->addEnemy(ID);
 			}
 			i--;
 			current = spt[i];
@@ -355,13 +361,20 @@ void Level::compass()
 		}
 		
 	}
-
-
-	int number = 0;
-	for (Room * room : spt) {
-		room->print(number);
-		number++;
+	//Outprint to console in reverse order
+	i = output.size() -1;
+	while (i >= 0)
+	{
+		cout << output.at(i) << endl;
+		i--;
 	}
+	
+	////test outprint
+	//int number = 0;
+	//for (Room * room : spt) {
+	//	room->print(number);
+	//	number++;
+	//}
 }
 
 void Level::resetDijkstra() {

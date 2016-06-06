@@ -37,6 +37,6 @@
 
 		void grenade();
 		int magicTalisman();
-		void compass();
+		void compass(bool cheat);
 	};
 

@@ -36,7 +36,7 @@ string Room::getDangerValue()
 {
 	int value = 0;
 	for (EnemyBase enemy : enemys) {
-		value += enemy.getHealth();
+		value += enemy.health;
 	}
 	for (Trap trap : traps) {
 		value += trap.getDamage();

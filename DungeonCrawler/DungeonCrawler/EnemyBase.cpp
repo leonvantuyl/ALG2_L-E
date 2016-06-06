@@ -34,7 +34,7 @@ int EnemyBase::getXP()
 
 void EnemyBase::killEnemy()
 {
-	health = -1;
+	health = 0;
 	alive = false;
 }
 
